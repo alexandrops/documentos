@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Documentos Pessoais - Alexandro Pinheiro Silva</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        .section {
+            margin-bottom: 40px;
+        }
+
+        .section h2 {
+            color: #667eea;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #667eea;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .info-item {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+        }
+
+        .info-item strong {
+            display: block;
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .info-item span {
+            color: #666;
+        }
+
+        .docs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .doc-card {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+        }
+
+        .doc-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        }
+
+        .doc-card h3 {
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+
+        .doc-preview {
+            width: 100%;
+            height: 200px;
+            background: white;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            overflow: hidden;
+            border: 2px solid #ddd;
+        }
+
+        .doc-preview img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            margin: 5px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.9em;
+            transition: all 0.3s;
+            text-decoration: none;
+        }
+
+        .btn-primary {
+            background: #667eea;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #5568d3;
+        }
+
+        .btn-secondary {
+            background: #6c757d;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: #5a6268;
+        }
+
+        .upload-section {
+            background: #f8f9fa;
+            padding: 30px;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .upload-area {
+            border: 3px dashed #667eea;
+            border-radius: 10px;
+            padding: 40px;
+            margin: 20px 0;
+            transition: all 0.3s;
+        }
+
+        .upload-area:hover {
+            background: #f0f0f0;
+            border-color: #5568d3;
+        }
+
+        .upload-area input[type="file"] {
+            display: none;
+        }
+
+        .upload-label {
+            cursor: pointer;
+            color: #667eea;
+            font-size: 1.1em;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            z-index: 1000;
+            padding: 20px;
+        }
+
+        .modal-content {
+            background: white;
+            max-width: 90%;
+            max-height: 90%;
+            margin: 50px auto;
+            border-radius: 10px;
+            overflow: auto;
+            position: relative;
+        }
+
+        .modal-content img {
+            width: 100%;
+            height: auto;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: red;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 1.8em;
+            }
+            
+            .content {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📄 Documentos Pessoais</h1>
+            <p>Alexandro Pinheiro Silva</p>
+        </div>
+
+        <div class="content">
+            <div class="section">
+                <h2>Informações Pessoais</h2>
+                <div class="info-grid">
+                    <div class="info-item">
+                        <strong>Nome Completo</strong>
+                        <span>Alexandro Pinheiro Silva</span>
+                    </div>
+                    <div class="info-item">
+                        <strong>Data de Nascimento</strong>
+                        <span>17/02/1975</span>
+                    </div>
+                    <div class="info-item">
+                        <strong>CPF</strong>
+                        <span>881.801.904-04</span>
+                    </div>
+                    <div class="info-item">
+                        <strong>Naturalidade</strong>
+                        <span>Recife - PE</span>
+                    </div>
+                    <div class="info-item">
+                        <strong>Estado Civil</strong>
+                        <span>Casado</span>
+                    </div>
+                    <div class="info-item">
+                        <strong>Filiação</strong>
+                        <span>Domício Campos da Silva<br>Jarneide de Lourdes Pinheiro Silva</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>Documentos Disponíveis</h2>
+                <div class="docs-grid" id="docsGrid">
+                    <!-- Documentos serão adicionados via JavaScript -->
+                </div>
+            </div>
+
+            <div class="section">
+                <div class="upload-section">
+                    <h2>Upload de Novos Documentos</h2>
+                    <div class="upload-area">
+                        <label for="fileUpload" class="upload-label">
+                            📤 Clique aqui ou arraste arquivos para fazer upload<br>
+                            <small>Formatos aceitos: PDF, JPG, PNG</small>
+                        </label>
+                        <input type="file" id="fileUpload" multiple accept=".pdf,.jpg,.jpeg,.png">
+                    </div>
+                    <div id="uploadedFiles"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <button class="close-modal" onclick="closeModal()">✕ Fechar</button>
+            <img id="modalImg" src="" alt="Documento">
+        </div>
+    </div>
+
+    <script>
+        const STORAGE_PREFIX = 'docs_alexandro_';
+        let documents = [];
+
+        // Inicializar documentos base
+        const baseDocuments = [
+            { name: 'RG - Carteira de Identidade ITEP-RN', type: 'RG', number: '881.801.904-04', id: 'doc_1' },
+            { name: 'Título Eleitoral', type: 'Título', number: '0325 3718 1621', id: 'doc_2' },
+            { name: 'Cartão do Cidadão - Caixa', type: 'Cartão', number: '125318086414', id: 'doc_3' },
+            { name: 'Cartão Nacional de Saúde - SUS', type: 'SUS', number: '706 2050 4129 6261', id: 'doc_4' },
+            { name: 'Certidão de Casamento', type: 'Certidão', number: 'Matrícula: 095083015520152000142100023285', id: 'doc_5' },
+            { name: 'CTPS - Carteira de Trabalho', type: 'CTPS', number: 'PIS: 131808.61-4', id: 'doc_6' },
+            { name: 'RG - Qualificação Civil PE', type: 'RG-PE', number: 'RG 4550076 SSP PE', id: 'doc_7' },
+            { name: 'Certificado de Dispensa Militar', type: 'Militar', number: 'RA: 93 2101 0342 09', id: 'doc_8' },
+            { name: 'Carteira de Identidade ITEP', type: 'ID-ITEP', number: 'CPF: 881.801.904-04', id: 'doc_9' }
+        ];
+
+        // Carregar documentos do armazenamento
+        async function loadDocuments() {
+            try {
+                const stored = await window.storage.get(STORAGE_PREFIX + 'list');
+                if (stored && stored.value) {
+                    documents = JSON.parse(stored.value);
+                } else {
+                    documents = baseDocuments;
+                    await saveDocumentsList();
+                }
+                renderDocuments();
+            } catch (error) {
+                console.log('Inicializando documentos base');
+                documents = baseDocuments;
+                renderDocuments();
+            }
+        }
+
+        // Salvar lista de documentos
+        async function saveDocumentsList() {
+            try {
+                await window.storage.set(STORAGE_PREFIX + 'list', JSON.stringify(documents));
+            } catch (error) {
+                console.error('Erro ao salvar lista:', error);
+            }
+        }
+
+        // Renderizar documentos
+        function renderDocuments() {
+            const docsGrid = document.getElementById('docsGrid');
+            docsGrid.innerHTML = '';
+
+            documents.forEach((doc, index) => {
+                const card = document.createElement('div');
+                card.className = 'doc-card';
+                card.innerHTML = `
+                    <h3>${doc.name}</h3>
+                    <div class="doc-preview" id="preview-${doc.id}">
+                        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 150'%3E%3Crect fill='%23f0f0f0' width='200' height='150'/%3E%3Ctext x='50%25' y='50%25' font-family='Arial' font-size='16' fill='%23999' text-anchor='middle' dy='.3em'%3E${doc.type}%3C/text%3E%3C/svg%3E" alt="${doc.name}">
+                    </div>
+                    <p style="color: #666; font-size: 0.9em; margin-bottom: 10px;">${doc.number}</p>
+                    <button class="btn btn-primary" onclick="viewDoc('${doc.id}')">👁️ Visualizar</button>
+                    <button class="btn btn-secondary" onclick="downloadDoc('${doc.id}')">⬇️ Download</button>
+                    <button class="btn" style="background: #dc3545; color: white;" onclick="deleteDoc('${doc.id}')">🗑️ Excluir</button>
+                `;
+                docsGrid.appendChild(card);
+                
+                // Carregar preview se existir
+                loadPreview(doc.id);
+            });
+        }
+
+        // Carregar preview do documento
+        async function loadPreview(docId) {
+            try {
+                const stored = await window.storage.get(STORAGE_PREFIX + docId);
+                if (stored && stored.value) {
+                    const previewEl = document.getElementById('preview-' + docId);
+                    if (previewEl) {
+                        previewEl.innerHTML = `<img src="${stored.value}" alt="Preview">`;
+                    }
+                }
+            } catch (error) {
+                console.log('Preview não disponível para', docId);
+            }
+        }
+
+        // Visualizar documento
+        async function viewDoc(docId) {
+            try {
+                const stored = await window.storage.get(STORAGE_PREFIX + docId);
+                if (stored && stored.value) {
+                    const modal = document.getElementById('modal');
+                    const modalImg = document.getElementById('modalImg');
+                    modalImg.src = stored.value;
+                    modal.style.display = 'block';
+                } else {
+                    alert('Documento ainda não foi carregado. Faça upload do arquivo.');
+                }
+            } catch (error) {
+                alert('Documento não encontrado. Faça upload do arquivo.');
+            }
+        }
+
+        // Download documento
+        async function downloadDoc(docId) {
+            try {
+                const stored = await window.storage.get(STORAGE_PREFIX + docId);
+                if (stored && stored.value) {
+                    const doc = documents.find(d => d.id === docId);
+                    const link = document.createElement('a');
+                    link.href = stored.value;
+                    link.download = doc.name + '.png';
+                    link.click();
+                } else {
+                    alert('Documento ainda não foi carregado. Faça upload do arquivo.');
+                }
+            } catch (error) {
+                alert('Erro ao baixar documento.');
+            }
+        }
+
+        // Excluir documento
+        async function deleteDoc(docId) {
+            if (!confirm('Deseja realmente excluir este documento?')) return;
+            
+            try {
+                await window.storage.delete(STORAGE_PREFIX + docId);
+                documents = documents.filter(d => d.id !== docId);
+                await saveDocumentsList();
+                renderDocuments();
+                alert('Documento excluído com sucesso!');
+            } catch (error) {
+                alert('Erro ao excluir documento.');
+            }
+        }
+
+        function closeModal() {
+            document.getElementById('modal').style.display = 'none';
+        }
+
+        const fileUpload = document.getElementById('fileUpload');
+        const uploadedFiles = document.getElementById('uploadedFiles');
+
+        // Upload de arquivos
+        fileUpload.addEventListener('change', async function(e) {
+            const files = e.target.files;
+            uploadedFiles.innerHTML = '<h3 style="color: #667eea; margin-top: 20px;">Processando Arquivos...</h3>';
+            
+            for (let i = 0; i < files.length; i++) {
+                const file = files[i];
+                const reader = new FileReader();
+                
+                reader.onload = async function(event) {
+                    const base64 = event.target.result;
+                    const docId = 'doc_' + Date.now() + '_' + i;
+                    
+                    // Criar novo documento
+                    const newDoc = {
+                        id: docId,
+                        name: file.name.replace(/\.[^/.]+$/, ""),
+                        type: file.type.includes('pdf') ? 'PDF' : 'Imagem',
+                        number: 'Upload: ' + new Date().toLocaleDateString('pt-BR'),
+                        uploadDate: new Date().toISOString()
+                    };
+                    
+                    try {
+                        // Salvar arquivo
+                        await window.storage.set(STORAGE_PREFIX + docId, base64);
+                        
+                        // Adicionar à lista
+                        documents.push(newDoc);
+                        await saveDocumentsList();
+                        
+                        const fileInfo = document.createElement('div');
+                        fileInfo.style.padding = '10px';
+                        fileInfo.style.margin = '5px 0';
+                        fileInfo.style.background = 'white';
+                        fileInfo.style.borderRadius = '5px';
+                        fileInfo.innerHTML = `✅ ${file.name} - Salvo com sucesso!`;
+                        uploadedFiles.appendChild(fileInfo);
+                    } catch (error) {
+                        const errorInfo = document.createElement('div');
+                        errorInfo.style.padding = '10px';
+                        errorInfo.style.margin = '5px 0';
+                        errorInfo.style.background = '#ffebee';
+                        errorInfo.style.borderRadius = '5px';
+                        errorInfo.style.color = '#c62828';
+                        errorInfo.innerHTML = `❌ ${file.name} - Erro ao salvar`;
+                        uploadedFiles.appendChild(errorInfo);
+                    }
+                };
+                
+                reader.readAsDataURL(file);
+            }
+            
+            // Aguardar processamento e atualizar
+            setTimeout(() => {
+                renderDocuments();
+                fileUpload.value = '';
+                
+                const successMsg = document.createElement('div');
+                successMsg.style.marginTop = '15px';
+                successMsg.style.padding = '15px';
+                successMsg.style.background = '#4caf50';
+                successMsg.style.color = 'white';
+                successMsg.style.borderRadius = '5px';
+                successMsg.style.textAlign = 'center';
+                successMsg.innerHTML = '✅ Documentos salvos! Role para cima para visualizar.';
+                uploadedFiles.appendChild(successMsg);
+            }, 1000);
+        });
+
+        const uploadArea = document.querySelector('.upload-area');
+        
+        uploadArea.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            uploadArea.style.background = '#e0e0e0';
+        });
+        
+        uploadArea.addEventListener('dragleave', () => {
+            uploadArea.style.background = '';
+        });
+        
+        uploadArea.addEventListener('drop', (e) => {
+            e.preventDefault();
+            uploadArea.style.background = '';
+            fileUpload.files = e.dataTransfer.files;
+            fileUpload.dispatchEvent(new Event('change'));
+        });
+
+        // Inicializar ao carregar a página
+        window.addEventListener('load', loadDocuments);
+    </script>
+</body>
+</html>
